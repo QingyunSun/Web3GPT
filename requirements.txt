@@ -1,7 +1,7 @@
-openai
-langchain
-chromadb
 pandas
 jupyterlab
 scipy
 numpy
+chromadb==0.3.7
+langchain==0.0.94
+openai==0.26.5
