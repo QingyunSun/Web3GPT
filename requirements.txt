@@ -1,4 +1,7 @@
 openai
 langchain
 chromadb
-
+pandas
+jupyterlab
+scipy
+numpy
