@@ -1,0 +1,22 @@
+Q1: what are the most recent trendy projects in zk-EVM space?
+
+
+A1 (ChatGPT):
+Zk-EVM (Zero-Knowledge Ethereum Virtual Machine) is a technology that allows for private and scalable transactions on the Ethereum blockchain. It is still a relatively new and evolving space, but there are several trendy projects that have emerged recently. Here are a few examples:
+
+    Aztec 2.0: Aztec is a privacy-focused protocol that uses zk-SNARKs to enable confidential transactions on Ethereum. Aztec 2.0 is the latest version of the protocol, which provides significant improvements in terms of performance and scalability.
+
+    ZkSync: ZkSync is a Layer 2 scaling solution for Ethereum that uses zk-rollups to achieve high transaction throughput and low fees. It also supports the transfer of any ERC-20 token and is fully compatible with existing Ethereum smart contracts.
+
+    Optimism: Optimism is another Layer 2 scaling solution that uses optimistic rollups to achieve high transaction throughput and low fees. It is designed to be fully compatible with Ethereum, allowing developers to easily port their existing smart contracts to the platform.
+
+    Hermez Network: Hermez is a zk-rollup that enables fast and cheap transactions on Ethereum. It is designed to be fully decentralized and community-driven, with a focus on privacy and scalability.
+
+    Matter Labs: Matter Labs is a research and development firm that focuses on zk-rollup technology. They are the creators of zkSync and have also developed Zinc, a programming language for creating zk-rollup circuits.
+
+These are just a few examples of the latest projects in the zk-EVM space, and there are likely to be many more emerging in the coming months and years as the technology continues to evolve.
+
+
+Google Top1 articles:
+
+https://medium.datadriveninvestor.com/6-zkevm-projects-the-key-to-ethereums-scalable-future-12af0bab4f1d
