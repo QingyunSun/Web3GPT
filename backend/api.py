@@ -15,7 +15,7 @@ _logger = getLogger(__name__)
 load_dotenv()
 app = FastAPI()
 
-DATA = '../data/cointelegraph_20230221_test.json'
+DATA = '../data/cointelegraph_20230221_trunc.json'
 LLM = OpenAI(model_name="text-davinci-003", temperature=0.5, best_of=10, n=3, max_tokens=200)
 VECTORDB = None
 RAG_TEMPLATE = """
@@ -81,7 +81,7 @@ def generate(*, query: str) -> str:
     return LLM(query)
 
 @app.post("/generate/{count_id}")
-async def generate(count_id: str, query: str):
+async def generate( query: str, count_id:str = "0"):
     if count_id == "1":
         return retrieval_augumented_generation(query=query)
     else:
