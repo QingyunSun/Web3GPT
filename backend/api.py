@@ -7,9 +7,12 @@ from langchain.document_loaders import TextLoader
 from langchain import PromptTemplate
 from fastapi import FastAPI
 from langchain.llms import OpenAI
+from dotenv import load_dotenv
+from logging import getLogger
 
+_logger = getLogger(__name__)
 
-
+load_dotenv()
 app = FastAPI()
 
 DATA = '../data/cointelegraph_20230221_test.json'
@@ -34,6 +37,7 @@ async def startup_event():
     """Should be connecting to search engine here, but for demo we are brute
     forcing shit.
     """
+    _logger.info(DATA)
     loader = TextLoader(DATA)
     documents = loader.load()
 
@@ -43,9 +47,11 @@ async def startup_event():
     embeddings = OpenAIEmbeddings()
     global VECTORDB
     VECTORDB = Chroma.from_documents(texts, embeddings)
+    _logger.info("done initializing")
 
 
-def retrieval_augumented_generation(*, query=query):
+
+def retrieval_augumented_generation(*, query: str) -> str:
     """Do a retrieval augumented generation against the preloaded vectorDB
     and generate languages using the preset prompt template.
 
@@ -56,6 +62,7 @@ def retrieval_augumented_generation(*, query=query):
         _type_: _description_
     """
     hits = VECTORDB.similarity_search(query=query)
+    hits_page_content = [h.page_content for h in hits]
 
     prompt = PromptTemplate(
         input_variables=["question", "article_1", "article_2", "article_3", "article_4"],
@@ -68,10 +75,9 @@ def retrieval_augumented_generation(*, query=query):
     "article_3": hits_page_content[2],
     "article_4": hits_page_content[3],
     }
-    prompt.format(**prompt_data)
-    return LLM(prompt.format(**prompt_data))
+    return LLM(prompt.format(**prompt_data)) + "||" + "".join(hits_page_content)
 
-def generate(*, query=query):
+def generate(*, query: str) -> str:
     return LLM(query)
 
 @app.post("/generate/{count_id}")
