@@ -75,7 +75,7 @@ def retrieval_augumented_generation(*, query: str) -> str:
     "article_3": hits_page_content[2],
     "article_4": hits_page_content[3],
     }
-    return LLM(prompt.format(**prompt_data)) + "||" + "".join(hits_page_content)
+    return LLM(prompt.format(**prompt_data)) # + "||" + "\n".join(hits_page_content)
 
 def generate(*, query: str) -> str:
     return LLM(query)
