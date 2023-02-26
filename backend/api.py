@@ -12,6 +12,7 @@ from langchain.llms import OpenAI
 
 app = FastAPI()
 
+DATA = '../data/cointelegraph_20230221_test.json'
 LLM = OpenAI(model_name="text-davinci-003", temperature=0.5, best_of=10, n=3, max_tokens=200)
 VECTORDB = None
 RAG_TEMPLATE = """
@@ -33,7 +34,7 @@ async def startup_event():
     """Should be connecting to search engine here, but for demo we are brute
     forcing shit.
     """
-    loader = TextLoader('../data/cointelegraph_20230221_trunc.json')
+    loader = TextLoader(DATA)
     documents = loader.load()
 
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=2000, chunk_overlap=0)
