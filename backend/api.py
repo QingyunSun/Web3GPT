@@ -18,6 +18,7 @@ app = FastAPI()
 DATA = '../data/cointelegraph_20230221_trunc.json'
 LLM = OpenAI(model_name="text-davinci-003", temperature=0.5, best_of=10, n=3, max_tokens=200)
 VECTORDB = None
+PERSIST_DIR = "db"
 RAG_TEMPLATE = """
 I want you to act as a crypto analyst working at coinbase writing about crypto currency.
 
@@ -37,6 +38,8 @@ async def startup_event():
     """Should be connecting to search engine here, but for demo we are brute
     forcing shit.
     """
+    persist_directory = 'db'
+
     _logger.info(DATA)
     loader = TextLoader(DATA)
     documents = loader.load()
@@ -44,9 +47,23 @@ async def startup_event():
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=2000, chunk_overlap=0)
     texts = text_splitter.split_documents(documents)
 
-    embeddings = OpenAIEmbeddings()
+    # Encoder to generate embeddings
+    encoder = OpenAIEmbeddings()
+
+    # Load previous generated database or index data.
     global VECTORDB
-    VECTORDB = Chroma.from_documents(texts, embeddings)
+    try:
+        VECTORDB = Chroma(
+            persist_directory=persist_directory,
+            embedding_function=encoder
+        )
+    except:
+        VECTORDB = Chroma.from_documents(
+            ducoments=texts,
+            embedding=encoder,
+            persist_directory=PERSIST_DIR
+        )
+        VECTORDB.persist()
     _logger.info("done initializing")
 
 
