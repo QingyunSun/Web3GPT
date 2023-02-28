@@ -9,13 +9,17 @@ from fastapi import FastAPI
 from langchain.llms import OpenAI
 from dotenv import load_dotenv
 from logging import getLogger
+from fastapi.logger import logger
+import logging
 
-_logger = getLogger(__name__)
+gunicorn_logger = logging.getLogger('gunicorn.error')
+logger.handlers = gunicorn_logger.handlers
+
 
 load_dotenv()
 app = FastAPI()
 
-DATA = '../data/cointelegraph_20230221_trunc.json'
+DATA = '../data/cointelegraph_20230221_test.json'
 LLM = OpenAI(model_name="text-davinci-003", temperature=0.5, best_of=10, n=3, max_tokens=200)
 VECTORDB = None
 PERSIST_DIR = "db"
@@ -40,7 +44,7 @@ async def startup_event():
     """
     persist_directory = 'db'
 
-    _logger.info(DATA)
+    logger.info(DATA)
     loader = TextLoader(DATA)
     documents = loader.load()
 
@@ -64,9 +68,13 @@ async def startup_event():
             persist_directory=PERSIST_DIR
         )
         VECTORDB.persist()
-    _logger.info("done initializing")
+    logger.info("done initializing")
 
-
+@app.on_event("shutdown")
+async def shutdown_event():
+    """Persisting vector database when shutting down.
+    """
+    VECTORDB.persist()
 
 def retrieval_augumented_generation(*, query: str) -> str:
     """Do a retrieval augumented generation against the preloaded vectorDB
@@ -86,11 +94,11 @@ def retrieval_augumented_generation(*, query: str) -> str:
         template=RAG_TEMPLATE,
     )
     prompt_data = {
-    "question": query,
-    "article_1": hits_page_content[0],
-    "article_2": hits_page_content[1],
-    "article_3": hits_page_content[2],
-    "article_4": hits_page_content[3],
+        "question": query,
+        "article_1": hits_page_content[0],
+        "article_2": hits_page_content[1],
+        "article_3": hits_page_content[2],
+        "article_4": hits_page_content[3],
     }
     return LLM(prompt.format(**prompt_data)) # + "||" + "\n".join(hits_page_content)
 
@@ -103,3 +111,8 @@ async def generate( query: str, count_id:str = "0"):
         return retrieval_augumented_generation(query=query)
     else:
         return generate(query=query)
+
+if __name__ != "main":
+    logger.setLevel(gunicorn_logger.level)
+else:
+    logger.setLevel(logging.DEBUG)
