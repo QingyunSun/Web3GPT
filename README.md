@@ -7,7 +7,9 @@
 https://web3gpt.ai/ 
 
 2) Telegram chatbot version (connected with Bybit, can place order for my Bybit account with USDT perp futures): 
+
 Chatbot name on Telegram:
+
 @Web3GPTbot
 
 To test in a official telegram group chat:
