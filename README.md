@@ -15,8 +15,8 @@ https://t.me/+EJyJ6BUjrrc1MDdl
 
 
 
-## Development demo:
-# Setup
+## Developer guide:
+### Setup
 Make sure you have your OpenAI API Key in the `.env` file.
 
 ```bash
@@ -26,7 +26,7 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-# Run Locally (Backend API)
+#### Run Locally (Backend API)
 To run the backend locally, please do this in a terminal
 ```bash
 cd backend
@@ -41,7 +41,7 @@ API docs is at
 http://0.0.0.0:8080/docs
 ```
 
-## Public URL Tunnel (ngrok)
+#### Public URL Tunnel (ngrok)
 To tunnel to a public URL, please first setup [ngrok](https://ngrok.com/), then run in another terminal:
 ```bash
 ngrok http 8080
@@ -68,3 +68,4 @@ The API in this example will be at
 ```
 https://03dd-99-44-171-191.ngrok.io
 ```
+
