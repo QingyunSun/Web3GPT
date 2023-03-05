@@ -1,6 +1,21 @@
 # Web3GPT
 
+## Product Demo:
 
+
+1) Web version (with Wallet Connect integration): 
+https://web3gpt.ai/ 
+
+2) Telegram chatbot version (connected with Bybit, can place order for my Bybit account with USDT perp futures): 
+Chatbot name on Telegram:
+@Web3GPTbot
+
+To test in a official telegram group chat:
+https://t.me/+EJyJ6BUjrrc1MDdl
+
+
+
+## Development demo:
 # Setup
 Make sure you have your OpenAI API Key in the `.env` file.
 
