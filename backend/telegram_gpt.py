@@ -1,12 +1,10 @@
 import openai
 import pymongo 
 openai.api_key = ''
-
-
 import logging
 import time
 from telegram import __version__ as TG_VER
-
+import pandas as pd
 try:
     from telegram import __version_info__
 except ImportError:
@@ -304,7 +302,6 @@ async def gpt_convo(update: Update, context: ContextTypes.DEFAULT_TYPE)->None:
         await bot.send_message(message.chat.id,text=gpt_text,reply_markup=ForceReply())
 
     return GPT_CONVO
-
 
 async def set_symbol(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """Sow new choice of buttons"""
