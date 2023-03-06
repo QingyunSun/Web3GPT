@@ -1,6 +1,6 @@
 import openai
 import pymongo 
-openai.api_key = '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'
+openai.api_key = ''
 
 
 import logging
@@ -28,7 +28,7 @@ import json
 import requests
 from pybit import HTTP
 
-bot = Bot("5970808340:AAGiwL8HiwSDK2zts35JV-ukAAGg2lpuS1o")
+bot = Bot()
 # Enable logging
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
@@ -422,7 +422,7 @@ class UsdtFilter(BaseFilter):
 def main() -> None:
     """Start the bot."""
     # Create the Application and pass it your bot's token.
-    application = Application.builder().token("5970808340:AAGiwL8HiwSDK2zts35JV-ukAAGg2lpuS1o").build()
+    application = Application.builder().token().build()
     # on different commands - answer in Telegram
     # application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("help", help_command))
